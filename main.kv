@@ -1,0 +1,742 @@
+#:import NoTransition kivy.uix.screenmanager.NoTransition
+#:import Factory kivy.factory.Factory
+
+<Progress>:
+    separator_color: 1, 1, 1, 1
+    background: "White.png"
+    Button:
+        id: btn
+        disabled: True
+        background_disabled_normal: "White.png"
+        text: "Hello"
+        Image:
+            source: "load.gif"
+            size: root.size
+
+<ScreenManagement>:
+    transition: NoTransition()
+    HomeScreen:
+        id: home_id
+    ChooseIMGScreen:
+    PreProcessScreen:
+        id: pic_pre_id
+    PostProcessScreen:
+        id: pic_post_id
+    InitialSubstanceScreen:
+        id: ini_id
+    PlotGraph4Pic:
+        id: gpic_id
+
+<HomeScreen>:
+    name: 'home'
+    ScrollView:
+        GridLayout:
+            size_hint_y: None
+            height: self.minimum_height
+            row_default_height: 20
+            cols:1
+            spacing: 10
+            padding: 36
+            Label:
+            Label:
+            MDLabel:
+                text: "ชื่อการทดลอง"
+                font_name: 'THSarabun Bold.ttf'
+                font_size: 20
+                size_hint_x:None
+            MDTextField:
+                id: name
+                mode: 'rectangle'
+                font_name: 'THSarabun Bold.ttf'
+                font_size: 20
+
+
+            MDLabel:
+                text: "สารเคมีที่ใช้"
+                font_name: 'THSarabun Bold.ttf'
+                font_size: 20
+                size_hint_x:None
+            MDTextField:
+                id: chem1
+                mode: 'rectangle'
+                font_name: 'THSarabun Bold.ttf'
+                font_size: 20
+
+            MDTextField:
+                id: chem2
+                mode: 'rectangle'
+                font_name: 'THSarabun Bold.ttf'
+                font_size: 20
+
+            MDTextField:
+                id: chem3
+                mode: 'rectangle'
+                font_name: 'THSarabun Bold.ttf'
+                font_size: 20
+
+            MDTextField:
+                id: chem4
+                mode: 'rectangle'
+                font_name: 'THSarabun Bold.ttf'
+                font_size: 20
+
+            MDLabel:
+                text: "วันที่ทดลอง"
+                font_name: 'THSarabun Bold.ttf'
+                font_size: 20
+                size_hint_x:None
+            MDTextField:
+                id: date
+                mode: 'rectangle'
+                font_name: 'THSarabun Bold.ttf'
+                font_size: 20
+
+            MDLabel:
+                text: "ครั้งที่"
+                font_name: 'THSarabun Bold.ttf'
+                font_size: 20
+                size_hint_x:None
+            MDTextField:
+                id: no
+                mode: 'rectangle'
+                font_name: 'THSarabun Bold.ttf'
+                font_size: 20
+
+            Label:
+            GridLayout:
+                cols:3
+                Label:
+                MDFillRoundFlatButton:
+                    id: next1
+                    text: "   ถัดไป   "
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                    pos_hint: {"center_x": 0.5}
+                    height: dp(40)
+                    on_release:
+                        root.input_lab_information()
+                Label:
+
+    BoxLayout:
+        MDToolbar:
+            elevation : 8
+            pos_hint: {"top": 1, "left": 1}
+
+<ChooseIMGScreen>
+    id: choose_img_id
+    name: 'cimg'
+    MDFillRoundFlatButton:
+        text: "   แกลลอรี่   "
+        font_name: 'THSarabun Bold.ttf'
+        font_size: 20
+        pos_hint: {"center_x": .5, "center_y": .5}
+        size_hint: None, None
+        height: dp(40)
+        on_press:
+            choose_img_id.file_manager_open()
+            root.manager.current = 'picpre'
+    BoxLayout:
+        MDToolbar:
+            left_action_items: [["arrow-left",  lambda x: app.change_screen('home')]]
+            elevation : 8
+            pos_hint: {"top": 1, "left": 1}
+
+<PreProcessScreen>
+    id: pic_pre_id
+    name: 'picpre'
+    BoxLayout :
+        orientation : 'vertical'
+        padding : '30dp'
+        spacing : '15dp'
+        MDLabel:
+            size_hint: (1, 0.10)
+        MDLabel:
+            text: "ชื่อรูปภาพ"
+            font_name: 'THSarabun Bold.ttf'
+            font_size: 20
+            size_hint:(None, .1)
+
+
+        MDLabel:
+            id: file_name_id
+            text: ""
+            font_name: 'THSarabun Bold.ttf'
+            font_size: 20
+            size_hint:(None, .1)
+
+        ImageButton:
+            id: show_pre
+            source: app.img_source_path
+            canvas.before:
+                Color:
+                    rgba: 0, 0, 0, 0
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+        MDFillRoundFlatButton:
+            text: "ประมวลผลรูปภาพ"
+            font_name: 'THSarabun Bold.ttf'
+            font_size: 20
+            height: dp(40)
+            pos_hint: {"center_x": .5, "center_y": .5}
+            on_press:
+                app.img_detect()
+                pic_pre_id.post()
+                Factory.Progress().open()
+                root.manager.current = 'picpost'
+
+    BoxLayout:
+        MDToolbar:
+            left_action_items: [["arrow-left",  lambda x: app.change_screen('cimg')]]
+            elevation : 8
+            pos_hint: {"top": 1, "left": 1}
+
+<PostProcessScreen>
+    name: 'picpost'
+    BoxLayout :
+        orientation : 'vertical'
+        padding : '30dp'
+        spacing : '15dp'
+        MDLabel:
+            size_hint: (1, 0.10)
+        ImageButton:
+            id: show_post
+            source: app.img_source_path
+            canvas.before:
+                Color:
+                    rgba: 0, 0, 0, 0
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+        MDFillRoundFlatButton:
+            text: "แสดงไฟล์เอกซ์เซล"
+            font_name: 'THSarabun Bold.ttf'
+            font_size: 20
+            height: dp(40)
+            pos_hint: {"center_x": .5, "center_y": .5}
+
+
+        MDFillRoundFlatButton:
+            text: "      ถัดไป      "
+            font_name: 'THSarabun Bold.ttf'
+            font_size: 20
+            height: dp(40)
+            pos_hint: {"center_x": .5, "center_y": .5}
+            on_press:
+                root.manager.current = 'initial'
+
+    BoxLayout:
+        MDToolbar:
+            left_action_items: [["arrow-left",  lambda x: app.change_screen('cimg')]]
+            elevation : 8
+            pos_hint: {"top": 1, "left": 1}
+
+<InitialSubstanceScreen>:
+    name: 'initial'
+    ScrollView:
+        GridLayout:
+            size_hint_y: None
+            height: self.minimum_height
+            row_default_height: 20
+            cols:1
+            spacing: 15
+            padding: 36
+            Label:
+            Label:
+            MDLabel:
+                text: "ความเข้มข้นของสารทดลองมาตรฐานตัวที่ 1"
+                font_name: 'THSarabun Bold.ttf'
+                font_size: 20
+
+            GridLayout:
+                cols:11
+                MDLabel:
+                    text: "1"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem1_1
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                Label:
+                MDLabel:
+                    text: "2"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem1_2
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                Label:
+                MDLabel:
+                    text: "3"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem1_3
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                Label:
+                MDLabel:
+                    text: "4"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem1_4
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+            Label:
+            GridLayout:
+                cols:11
+                MDLabel:
+                    text: "5"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem1_5
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                Label:
+                MDLabel:
+                    text: "6"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem1_6
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                Label:
+                MDLabel:
+                    text: "7"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem1_7
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                Label:
+                MDLabel:
+                    text: "8"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem1_8
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+
+            Label:
+            Label:
+            MDLabel:
+                text: "ความเข้มข้นของสารทดลองมาตรฐานตัวที่ 2"
+                font_name: 'THSarabun Bold.ttf'
+                font_size: 20
+            GridLayout:
+                cols:11
+                MDLabel:
+                    text: "1"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem2_1
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                Label:
+                MDLabel:
+                    text: "2"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem2_2
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                Label:
+                MDLabel:
+                    text: "3"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem2_3
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                Label:
+                MDLabel:
+                    text: "4"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem2_4
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+            Label:
+            GridLayout:
+                cols:11
+                MDLabel:
+                    text: "5"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem2_5
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                Label:
+                MDLabel:
+                    text: "6"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem2_6
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                Label:
+                MDLabel:
+                    text: "7"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem2_7
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                Label:
+                MDLabel:
+                    text: "8"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem2_8
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+
+            Label:
+            Label:
+            MDLabel:
+                text: "ความเข้มข้นของสารทดลองมาตรฐานตัวที่ 3"
+                font_name: 'THSarabun Bold.ttf'
+                font_size: 20
+            GridLayout:
+                cols:11
+                MDLabel:
+                    text: "1"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem3_1
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                Label:
+                MDLabel:
+                    text: "2"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem3_2
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                Label:
+                MDLabel:
+                    text: "3"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem3_3
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                Label:
+                MDLabel:
+                    text: "4"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem3_4
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+            Label:
+            GridLayout:
+                cols:11
+                MDLabel:
+                    text: "5"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem3_5
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                Label:
+                MDLabel:
+                    text: "6"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem3_6
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                Label:
+                MDLabel:
+                    text: "7"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem3_7
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                Label:
+                MDLabel:
+                    text: "8"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem3_8
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+
+            Label:
+            Label:
+            MDLabel:
+                text: "ความเข้มข้นของสารทดลองมาตรฐานตัวที่ 4"
+                font_name: 'THSarabun Bold.ttf'
+                font_size: 20
+            GridLayout:
+                cols:11
+                MDLabel:
+                    text: "1"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem4_1
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                Label:
+                MDLabel:
+                    text: "2"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem4_2
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                Label:
+                MDLabel:
+                    text: "3"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem4_3
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                Label:
+                MDLabel:
+                    text: "4"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem4_4
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+            Label:
+            GridLayout:
+                cols:11
+                MDLabel:
+                    text: "5"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem4_5
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                Label:
+                MDLabel:
+                    text: "6"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem4_6
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                Label:
+                MDLabel:
+                    text: "7"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem4_7
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                Label:
+                MDLabel:
+                    text: "8"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDTextField:
+                    id: chem4_8
+                    mode: 'rectangle'
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+
+            Label:
+            Label:
+            GridLayout:
+                cols:6
+                Label:
+                Label:
+                MDLabel:
+                    text: "R^2 สีแดง"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDCheckbox:
+                    id: red
+                    size_hint: None, None
+                    size: dp(50), dp(50)
+                Label:
+                Label:
+            Label:
+            GridLayout:
+                cols:6
+                Label:
+                Label:
+                MDLabel:
+                    text: "R^2 สีเขียว"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDCheckbox:
+                    id: green
+                    size_hint: None, None
+                    size: dp(50), dp(50)
+                Label:
+                Label:
+            Label:
+            GridLayout:
+                cols:6
+                Label:
+                Label:
+                MDLabel:
+                    text: "R^2 สีน้ำเงิน"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                MDCheckbox:
+                    id: blue
+                    size_hint: None, None
+                    size: dp(50), dp(50)
+                Label:
+                Label:
+            Label:
+            GridLayout:
+                cols:3
+                Label:
+                MDFillRoundFlatButton:
+                    text: "คำนวณหาความสัมพันธ์"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                    height: dp(40)
+                    pos_hint: {"center_x": .5, "center_y": .13}
+                    on_press:
+                        root.intial_sub(red.active,green.active,blue.active)
+                        root.graph_pic_source()
+                        root.manager.current = 'gpic'
+                Label:
+            Label:
+    BoxLayout:
+        MDToolbar:
+            left_action_items: [["arrow-left",  lambda x: app.change_screen('cimg')]]
+            elevation : 8
+            pos_hint: {"top": 1, "left": 1}
+
+<PlotGraph4Pic>:
+    name: 'gpic'
+    ScrollView:
+        GridLayout:
+            cols: 1
+            padding: 36
+            size_hint_y: None
+            height: self.minimum_height
+            row_default_height: 300
+            ImageButton:
+                id: figure1
+                source: "figure1.png"
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 0
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            ImageButton:
+                id: figure2
+                source: "figure1.png"
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 0
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            ImageButton:
+                id: figure3
+                source: "figure1.png"
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 0
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            ImageButton:
+                id: figure4
+                source: "figure1.png"
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 0
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            GridLayout:
+                cols:5
+                Label:
+                MDFillRoundFlatButton:
+                    text: "แสดงไฟล์เอกซ์เซล"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                    height: dp(40)
+
+                Label:
+                MDFillRoundFlatButton:
+                    text: "กลับหน้าแรก"
+                    font_name: 'THSarabun Bold.ttf'
+                    font_size: 20
+                    height: dp(40)
+                    on_press:
+                        root.manager.current = 'home'
+                Label:
+    BoxLayout:
+        MDToolbar:
+            left_action_items: [["arrow-left",  lambda x: app.change_screen('initial')]]
+            elevation : 8
+            pos_hint: {"top": 1, "left": 1}
