@@ -3,8 +3,8 @@ from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager, Screen
 
 # For mobile phone
-from android.storage import primary_external_storage_path
-primary_ext_storage = primary_external_storage_path()
+#from android.storage import primary_external_storage_path
+#primary_ext_storage = primary_external_storage_path()
 
 from kivy.animation import Animation
 from kivy.metrics import dp
@@ -20,7 +20,7 @@ import os
 
 
 #Window.size = (375, 650)
-#Window.size = (720, 1185) #for mobile
+
 
 class ScreenManagement(ScreenManager):
     pass
@@ -84,8 +84,8 @@ class ChooseIMGScreen(Screen):
         )
 
     def file_manager_open(self):
-        #self.file_manager.show('/')  # for computer
-        self.file_manager.show(primary_ext_storage)  # for mobile phone
+        self.file_manager.show('/')  # for computer
+        #self.file_manager.show(primary_ext_storage)  # for mobile phone
         self.manager_open = True
 
     def select_path(self, path):
@@ -198,8 +198,9 @@ class ImageButton(ButtonBehavior, Image):
     pass
 
 class MainApp(MDApp):
-    from android.permissions import request_permissions, Permission
-    request_permissions([Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE])
+    #for mobile
+    #from android.permissions import request_permissions, Permission
+    #request_permissions([Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE])
 
     w = open("file_path.txt", "w")
     w.truncate()
@@ -216,14 +217,14 @@ class MainApp(MDApp):
 
     def pre_picture_source(self, path):
         filename = "C:" + path.replace("\\", "/")
-        #self.root.ids.pic_pre_id.ids.show_pre.source = filename # For computer
-        self.root.ids.pic_pre_id.ids.show_pre.source = path # For mobile phone
+        self.root.ids.pic_pre_id.ids.show_pre.source = filename # For computer
+        #self.root.ids.pic_pre_id.ids.show_pre.source = path # For mobile phone
         with open("file_path.txt", "w") as f:
 
             f.write(path) # For mobile phone
             #f.write(filename)  # For computer
-        #pic_name = path.split("\\")
-        pic_name = path.split("/") # For mobile phone
+        pic_name = path.split("\\")
+        #pic_name = path.split("/") # For mobile phone
         self.root.ids.pic_pre_id.ids.file_name_id.text = pic_name[len(pic_name)-1]
 
     def post_picture_source(self):
