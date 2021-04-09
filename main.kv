@@ -15,13 +15,13 @@
 
 <ScreenManagement>:
     transition: NoTransition()
-    HomeScreen:
-        id: home_id
-    ChooseIMGScreen:
-    PreProcessScreen:
-        id: pic_pre_id
-    PostProcessScreen:
-        id: pic_post_id
+    #HomeScreen:
+    #    id: home_id
+    #ChooseIMGScreen:
+    #PreProcessScreen:
+     #   id: pic_pre_id
+    #PostProcessScreen:
+     #   id: pic_post_id
     InitialSubstanceScreen:
         id: ini_id
     PlotGraph4Pic:
@@ -35,72 +35,74 @@
             height: self.minimum_height
             row_default_height: 20
             cols:1
-            spacing: 10
-            padding: 36
+            spacing: 25
+            padding: 60
             Label:
             Label:
             MDLabel:
                 text: "ชื่อการทดลอง"
                 font_name: 'THSarabun Bold.ttf'
-                font_size: 20
-                size_hint_x:None
+                font_size: 60
+
             MDTextField:
                 id: name
                 mode: 'rectangle'
                 font_name: 'THSarabun Bold.ttf'
-                font_size: 20
+                font_size: 60
 
-
+            Label:
             MDLabel:
                 text: "สารเคมีที่ใช้"
                 font_name: 'THSarabun Bold.ttf'
-                font_size: 20
-                size_hint_x:None
+                font_size: 60
+
             MDTextField:
                 id: chem1
                 mode: 'rectangle'
                 font_name: 'THSarabun Bold.ttf'
-                font_size: 20
+                font_size: 60
 
             MDTextField:
                 id: chem2
                 mode: 'rectangle'
                 font_name: 'THSarabun Bold.ttf'
-                font_size: 20
+                font_size: 60
 
             MDTextField:
                 id: chem3
                 mode: 'rectangle'
                 font_name: 'THSarabun Bold.ttf'
-                font_size: 20
+                font_size: 60
 
             MDTextField:
                 id: chem4
                 mode: 'rectangle'
                 font_name: 'THSarabun Bold.ttf'
-                font_size: 20
+                font_size: 60
 
+
+            Label:
             MDLabel:
                 text: "วันที่ทดลอง"
                 font_name: 'THSarabun Bold.ttf'
-                font_size: 20
-                size_hint_x:None
+                font_size: 60
             MDTextField:
                 id: date
                 mode: 'rectangle'
                 font_name: 'THSarabun Bold.ttf'
-                font_size: 20
+                font_size: 60
 
+            Label:
             MDLabel:
                 text: "ครั้งที่"
                 font_name: 'THSarabun Bold.ttf'
-                font_size: 20
-                size_hint_x:None
+                font_size: 60
+
             MDTextField:
                 id: no
                 mode: 'rectangle'
                 font_name: 'THSarabun Bold.ttf'
-                font_size: 20
+                font_size: 60
 
             Label:
             GridLayout:
@@ -110,7 +112,7 @@
                     id: next1
                     text: "   ถัดไป   "
                     font_name: 'THSarabun Bold.ttf'
-                    font_size: 20
+                    font_size: 30
                     pos_hint: {"center_x": 0.5}
                     height: dp(40)
                     on_release:
@@ -128,7 +130,7 @@
     MDFillRoundFlatButton:
         text: "   แกลลอรี่   "
         font_name: 'THSarabun Bold.ttf'
-        font_size: 20
+        font_size: 30
         pos_hint: {"center_x": .5, "center_y": .5}
         size_hint: None, None
         height: dp(40)
@@ -146,23 +148,23 @@
     name: 'picpre'
     BoxLayout :
         orientation : 'vertical'
-        padding : '30dp'
-        spacing : '15dp'
-        MDLabel:
+        padding : '60dp'
+        spacing : '25dp'
+        Label:
             size_hint: (1, 0.10)
         MDLabel:
             text: "ชื่อรูปภาพ"
             font_name: 'THSarabun Bold.ttf'
-            font_size: 20
-            size_hint:(None, .1)
+            font_size: 60
+            size_hint:(0.5, .1)
 
 
         MDLabel:
             id: file_name_id
             text: ""
             font_name: 'THSarabun Bold.ttf'
-            font_size: 20
-            size_hint:(None, .1)
+            font_size: 60
+            size_hint:(0.5, .1)
 
         ImageButton:
             id: show_pre
@@ -213,7 +215,7 @@
         MDFillRoundFlatButton:
             text: "แสดงไฟล์เอกซ์เซล"
             font_name: 'THSarabun Bold.ttf'
-            font_size: 20
+            font_size: 30
             height: dp(40)
             pos_hint: {"center_x": .5, "center_y": .5}
 
@@ -221,7 +223,7 @@
         MDFillRoundFlatButton:
             text: "      ถัดไป      "
             font_name: 'THSarabun Bold.ttf'
-            font_size: 20
+            font_size: 30
             height: dp(40)
             pos_hint: {"center_x": .5, "center_y": .5}
             on_press:
