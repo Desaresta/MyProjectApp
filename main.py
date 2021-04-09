@@ -1,11 +1,6 @@
 from kivymd.app import MDApp
 from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager, Screen
-
-# For mobile phone
-#from android.storage import primary_external_storage_path
-#primary_ext_storage = primary_external_storage_path()
-
 from kivy.animation import Animation
 from kivy.metrics import dp
 from kivymd.toast import toast
@@ -17,11 +12,14 @@ from kivy.uix.button import ButtonBehavior
 from kivy.uix.image import Image
 from kivy.uix.popup import Popup
 import os
-
+#Window.size = (720, 1165)
+from kivy.utils import platform
 from jnius import autoclass,cast
 
-#Window.size = (720, 1165)
-
+# For mobile phone
+if platform == 'android':
+    from android.permissions import request_permissions, Permission
+    from android.storage import primary_external_storage_path
 
 class ScreenManagement(ScreenManager):
     pass
@@ -287,6 +285,13 @@ class MainApp(MDApp):
         return ScreenManagement()
 
     def change_screen(self, screen):
+        #for mobile
+        if screen == "cimg":
+            print("Screen name is ", screen)
+            if platform == 'android':
+                from android.permissions import request_permissions, Permission
+                request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
+
         self.root.current = screen
 
 if __name__ == '__main__':
