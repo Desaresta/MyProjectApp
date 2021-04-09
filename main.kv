@@ -15,13 +15,13 @@
 
 <ScreenManagement>:
     transition: NoTransition()
-    #HomeScreen:
-    #    id: home_id
-    #ChooseIMGScreen:
-    #PreProcessScreen:
-     #   id: pic_pre_id
-    #PostProcessScreen:
-     #   id: pic_post_id
+    HomeScreen:
+        id: home_id
+    ChooseIMGScreen:
+    PreProcessScreen:
+        id: pic_pre_id
+    PostProcessScreen:
+        id: pic_post_id
     InitialSubstanceScreen:
         id: ini_id
     PlotGraph4Pic:
@@ -136,7 +136,8 @@
         height: dp(40)
         on_press:
             choose_img_id.file_manager_open()
-            root.manager.current = 'picpre'
+            app.change_screen('picpre')
+            #root.manager.current = 'picpre'
     BoxLayout:
         MDToolbar:
             left_action_items: [["arrow-left",  lambda x: app.change_screen('home')]]
@@ -186,7 +187,8 @@
                 app.img_detect()
                 pic_pre_id.post()
                 Factory.Progress().open()
-                root.manager.current = 'picpost'
+                app.change_screen('picpost')
+                #root.manager.current = 'picpost'
 
     BoxLayout:
         MDToolbar:
@@ -229,7 +231,8 @@
             height: dp(40)
             pos_hint: {"center_x": .5, "center_y": .5}
             on_press:
-                root.manager.current = 'initial'
+                app.change_screen('initial')
+                #root.manager.current = 'initial'
 
     BoxLayout:
         MDToolbar:
@@ -667,7 +670,8 @@
                     on_press:
                         root.intial_sub(red.active,green.active,blue.active)
                         root.graph_pic_source()
-                        root.manager.current = 'gpic'
+                        app.change_screen('gpic')
+                        #root.manager.current = 'gpic'
                 Label:
             Label:
     BoxLayout:
@@ -739,7 +743,8 @@
                     font_size: 30
                     height: dp(40)
                     on_press:
-                        root.manager.current = 'home'
+                        app.change_screen('home')
+                        #root.manager.current = 'home'
                 Label:
     BoxLayout:
         MDToolbar:
