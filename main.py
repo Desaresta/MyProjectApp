@@ -18,8 +18,9 @@ from kivy.uix.image import Image
 from kivy.uix.popup import Popup
 import os
 
+from jnius import autoclass,cast
 
-#Window.size = (375, 650)
+#Window.size = (720, 1165)
 
 
 class ScreenManagement(ScreenManager):
@@ -198,10 +199,6 @@ class ImageButton(ButtonBehavior, Image):
     pass
 
 class MainApp(MDApp):
-    #for mobile
-    #from android.permissions import request_permissions, Permission
-    #request_permissions([Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE])
-
     w = open("file_path.txt", "w")
     w.truncate()
     if os.path.isfile("file_path.txt"):
@@ -253,6 +250,38 @@ class MainApp(MDApp):
         self.root.ids.gpic_id.ids.figure2.source = 'figure2.png'
         self.root.ids.gpic_id.ids.figure3.source = 'figure3.png'
         self.root.ids.gpic_id.ids.figure4.source = 'figure4.png'
+
+    def open_excel(self):
+        f = open("file_path.txt", "r")
+        path = f.read()
+        path1 = path.split('\n')
+        filename = path1[0].split('.')
+        p__current_file_month = filename[0] + "_detect" + ".xlsx"
+
+        PythonActivity = autoclass('org.kivy.android.PythonActivity')
+        # Get the Android Intent class
+        Intent = autoclass('android.content.Intent')
+        ## get the URI android
+        Uri = autoclass('android.net.Uri')
+        ## Get the File object
+        File = autoclass('java.io.File')
+        ## String object
+        String = autoclass('java.lang.String')
+
+        # create a new Android Intent
+        p__intent = Intent()
+        # Set the action of the intent
+        p__intent.setAction(Intent.ACTION_VIEW)
+        # Set the intent myme type file
+        # p__intent.setDataAndType(Uri.fromFile(File(p__current_file_month)),String("application/vnd.ms-excel"))
+        p__intent.setDataAndType(Uri.fromFile(File(p__current_file_month)),
+                                 String("application/vnd.google-apps.spreadsheet"))
+        ## Set extra to put the filename
+        p__intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+        p__currentActivity = cast('android.app.Activity', PythonActivity.mActivity)
+        # Run the intent activity
+        p__currentActivity.startActivity(p__intent)
 
     def build(self):
         return ScreenManagement()
