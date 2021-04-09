@@ -221,8 +221,8 @@ class MainApp(MDApp):
         #self.root.ids.pic_pre_id.ids.show_pre.source = path # For mobile phone
         with open("file_path.txt", "w") as f:
 
-            f.write(path) # For mobile phone
-            #f.write(filename)  # For computer
+            #f.write(path) # For mobile phone
+            f.write(filename)  # For computer
         pic_name = path.split("\\")
         #pic_name = path.split("/") # For mobile phone
         self.root.ids.pic_pre_id.ids.file_name_id.text = pic_name[len(pic_name)-1]
