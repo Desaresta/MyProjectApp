@@ -4,7 +4,7 @@
 1.0
 
 ### Process
-![alt text](https://github.com/Orapinkr/MyProjectApp/blob/master/process.jpg?raw=true)
+![alt text](https://github.com/Orapinkr/MyProjectApp/blob/master/process.png?raw=true)
 
 ### Preview
 ![alt text](https://github.com/Orapinkr/MyProjectApp/blob/master/mobile_app_01.jpg?raw=true)
@@ -19,3 +19,6 @@
 
 ![alt text](https://github.com/Orapinkr/MyProjectApp/blob/master/mobile_app_06.jpg?raw=true)
 
+![alt text](https://github.com/Orapinkr/MyProjectApp/blob/master/mobile_app_07.jpg?raw=true)
+
+![alt text](https://github.com/Orapinkr/MyProjectApp/blob/master/mobile_app_08.jpg?raw=true)
